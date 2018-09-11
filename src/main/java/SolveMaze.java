@@ -28,13 +28,35 @@ public class SolveMaze {
          */
         maze.startAtZero();
         maze.endAtTopRight();
-
         /*
          * You should be able to solve a 10 x 10 maze in (far fewer than) 1000 steps.
          * Feel free to adjust this number if you experiment with other mazes.
          */
         for (int step = 0; step < 1000; step++) {
             // Implement your maze solving algorithm here
+            if (!maze.isFinished()) {
+                //check going left
+                maze.turnLeft();
+                if (maze.canMove()) {
+                    maze.move();
+                } else {
+                    //check going straight
+                    maze.turnRight();
+                    if (maze.canMove()) {
+                        maze.move();
+                    } else {
+                        //check going right
+                        maze.turnRight();
+                        if (maze.canMove()) {
+                            maze.move();
+                        } else {
+                            //if no other options, turn around
+                            maze.turnRight();
+                            maze.move();
+                        }
+                    }
+                }
+            }
         }
 
         if (maze.isFinished()) {
